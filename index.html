@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Evaluaciones Trimestral</title>
+  <title>EVALUACIONES TRIMESTRALES</title>
   <style>
     /* ————— Estilos generales y fondo ————— */
     body {
@@ -22,10 +22,10 @@
 
     /* ————— Menú horizontal de botones ————— */
     .menu {
-      display: flex;              
-      flex-wrap: wrap;            
-      justify-content: center;    
-      gap: 12px 16px;             
+      display: flex;              /* Flex en fila */
+      flex-wrap: wrap;            /* Si no caben, pasan a la siguiente línea */
+      justify-content: center;    /* Centra los botones */
+      gap: 12px 16px;             /* espacio vertical y horizontal */
       background: rgba(255,255,255,0.9);
       border-radius: 10px;
       padding: 20px;
@@ -37,34 +37,28 @@
     .menu img {
       max-width: 180px;
       margin-bottom: 10px;
-      flex-basis: 100%;           
+      flex-basis: 100%;           /* Para que el logo ocupe toda la fila */
     }
 
     .menu h1 {
-      flex-basis: 100%;           
+      flex-basis: 100%;           /* El título también a toda la fila */
       margin: 10px 0 20px;
       font-size: 1.6rem;
     }
 
     .menu a {
-      display: inline-block;      
+      display: inline-block;      /* Para que respete gap y se ajuste al contenido */
       padding: 12px 18px;
       background-color: #2f7833;
       color: #fff;
       text-decoration: none;
       border-radius: 6px;
       font-weight: bold;
-      transition: background-color .2s, box-shadow .2s;
+      transition: background-color .2s;
       cursor: pointer;
     }
     .menu a:hover {
-      background-color: #225e29;
-    }
-
-    /* Estilo del botón activo */
-    .menu a.active {
-      background-color: #19461c;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      background-color: #005a9e;
     }
 
     /* ————— Contenedor del iframe ————— */
@@ -106,23 +100,24 @@
     <a href="#"
        data-src="https://forms.office.com/r/saqhvE8Hym"
        class="btn-load">
-      ✅ MI EVALUACIÓN
+      ✅ Mi Evaluación
     </a>
     <a href="#"
        data-src="https://forms.office.com/r/n9kUmHfphr"
        class="btn-load">
-      🤝 COLABORADORES DEL MISMO NIVEL
+      🤝 Colaboradores del mismo nivel
     </a>
-    <a href="#"
+      <a href="#"
        data-src="https://forms.office.com/r/mEEJ3EEpHM"
        class="btn-load">
-      🔽 SUBORDINADOS A JEFES
+      🔽 Subordinados a Jefes
     </a>
     <a href="#"
        data-src="https://forms.office.com/r/BVgb6ZpNae"
        class="btn-load">
-      🧑‍💼 ENTRE GERENTES Y DE DIRECTORES A GERENTES
+      🧑‍💼 Entre Gerentes y Directores
     </a>
+
   </div>
 
   <!-- ————— Aquí aparecerá el formulario cargado ————— -->
@@ -131,24 +126,19 @@
   </div>
 
   <script>
-    const botones = document.querySelectorAll('.btn-load');
-    const iframe  = document.getElementById('formFrame');
-
-    botones.forEach(btn => {
-      btn.addEventListener('click', evt => {
+    // Carga la URL del formulario en el iframe al hacer clic
+    document.querySelectorAll('.btn-load').forEach(function(btn){
+      btn.addEventListener('click', function(evt){
         evt.preventDefault();
-        // 1) Cargar formulario
-        const url = btn.getAttribute('data-src');
-        iframe.src = url;
-        // 2) Marcar botón activo
-        botones.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        var url = this.getAttribute('data-src');
+        document.getElementById('formFrame').src = url;
       });
     });
 
-    // Al cargar la página, simular clic en el primer botón
-    window.addEventListener('DOMContentLoaded', () => {
-      if (botones.length) botones[0].click();
+    // Carga automática del primer formulario al iniciar
+    window.addEventListener('DOMContentLoaded', function(){
+      var first = document.querySelector('.btn-load');
+      if(first) first.click();
     });
   </script>
 </body>
