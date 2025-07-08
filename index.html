@@ -22,10 +22,10 @@
 
     /* ————— Menú horizontal de botones ————— */
     .menu {
-      display: flex;              /* Flex en fila */
-      flex-wrap: wrap;            /* Si no caben, pasan a la siguiente línea */
-      justify-content: center;    /* Centra los botones */
-      gap: 12px 16px;             /* espacio vertical y horizontal */
+      display: flex;              
+      flex-wrap: wrap;            
+      justify-content: center;    
+      gap: 12px 16px;             
       background: rgba(255,255,255,0.9);
       border-radius: 10px;
       padding: 20px;
@@ -37,28 +37,34 @@
     .menu img {
       max-width: 180px;
       margin-bottom: 10px;
-      flex-basis: 100%;           /* Para que el logo ocupe toda la fila */
+      flex-basis: 100%;           
     }
 
     .menu h1 {
-      flex-basis: 100%;           /* El título también a toda la fila */
+      flex-basis: 100%;           
       margin: 10px 0 20px;
       font-size: 1.6rem;
     }
 
     .menu a {
-      display: inline-block;      /* Para que respete gap y se ajuste al contenido */
+      display: inline-block;      
       padding: 12px 18px;
       background-color: #2f7833;
       color: #fff;
       text-decoration: none;
       border-radius: 6px;
       font-weight: bold;
-      transition: background-color .2s;
+      transition: background-color .2s, box-shadow .2s;
       cursor: pointer;
     }
     .menu a:hover {
-      background-color: #005a9e;
+      background-color: #225e29;
+    }
+
+    /* Estilo del botón activo */
+    .menu a.active {
+      background-color: #19461c;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
 
     /* ————— Contenedor del iframe ————— */
@@ -117,7 +123,6 @@
        class="btn-load">
       🧑‍💼 ENTRE GERENTES Y DE DIRECTORES A GERENTES
     </a>
-
   </div>
 
   <!-- ————— Aquí aparecerá el formulario cargado ————— -->
@@ -126,19 +131,24 @@
   </div>
 
   <script>
-    // Carga la URL del formulario en el iframe al hacer clic
-    document.querySelectorAll('.btn-load').forEach(function(btn){
-      btn.addEventListener('click', function(evt){
+    const botones = document.querySelectorAll('.btn-load');
+    const iframe  = document.getElementById('formFrame');
+
+    botones.forEach(btn => {
+      btn.addEventListener('click', evt => {
         evt.preventDefault();
-        var url = this.getAttribute('data-src');
-        document.getElementById('formFrame').src = url;
+        // 1) Cargar formulario
+        const url = btn.getAttribute('data-src');
+        iframe.src = url;
+        // 2) Marcar botón activo
+        botones.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
 
-    // Carga automática del primer formulario al iniciar
-    window.addEventListener('DOMContentLoaded', function(){
-      var first = document.querySelector('.btn-load');
-      if(first) first.click();
+    // Al cargar la página, simular clic en el primer botón
+    window.addEventListener('DOMContentLoaded', () => {
+      if (botones.length) botones[0].click();
     });
   </script>
 </body>
