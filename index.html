@@ -3,68 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Evaluaciones 360° - Natural Foods</title>
+  <title>Evaluaciones Trimestral</title>
   <style>
+    /* ————— Estilos generales y fondo ————— */
     body {
+      /*background-image: url('fondo-natural-foods.jpg');*/
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-color: #f2f2f2;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
       margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
       text-align: center;
-      -webkit-font-smoothing: antialiased;
     }
-    .container {
-      background: white;
-      max-width: 480px;
-      margin: 0 auto 30px;
-      padding: 20px 15px 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+
+    /* ————— Menú horizontal de botones ————— */
+    .menu {
+      display: flex;              /* Flex en fila */
+      flex-wrap: wrap;            /* Si no caben, pasan a la siguiente línea */
+      justify-content: center;    /* Centra los botones */
+      gap: 12px 16px;             /* espacio vertical y horizontal */
+      background: rgba(255,255,255,0.9);
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 90%;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .logo {
-      margin-bottom: 25px;
+
+    .menu img {
+      max-width: 180px;
+      margin-bottom: 10px;
+      flex-basis: 100%;           /* Para que el logo ocupe toda la fila */
     }
-    .logo img {
-      max-width: 200px;
-      width: 60%;
-      height: auto;
-      margin: 0 auto;
-      display: block;
+
+    .menu h1 {
+      flex-basis: 100%;           /* El título también a toda la fila */
+      margin: 10px 0 20px;
+      font-size: 1.6rem;
     }
-    h1 {
-      font-size: 1.7rem;
-      margin-bottom: 25px;
-      color: #2e2e2e;
-    }
-    .buttons a {
-      display: block;
-      background-color: #0078D4;
-      color: white;
-      padding: 16px;
-      margin: 15px 0;
-      border-radius: 12px;
+
+    .menu a {
+      display: inline-block;      /* Para que respete gap y se ajuste al contenido */
+      padding: 12px 18px;
+      background-color: #2f7833;
+      color: #fff;
       text-decoration: none;
+      border-radius: 6px;
       font-weight: bold;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 6px rgba(0,120,212,0.3);
-      transition: background-color 0.3s ease;
+      transition: background-color .2s;
       cursor: pointer;
     }
-    .buttons a:hover {
+    .menu a:hover {
       background-color: #005a9e;
     }
-    iframe {
-      width: 100%;
-      height: 700px;
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+
+    /* ————— Contenedor del iframe ————— */
+    .form-container {
+      max-width: 900px;
+      height: 80vh;
+      margin: 0 auto;
+      border: 4px solid rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
-    @media (max-width: 400px) {
-      .container {
-        padding: 15px 10px 30px;
+    .form-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ————— Responsive: en móviles estrechos apilar verticalmente ————— */
+    @media (max-width: 480px) {
+      .menu {
+        flex-direction: column;
+        gap: 8px 0;
       }
-      .buttons a {
-        font-size: 1rem;
-        padding: 14px;
+      .menu img,
+      .menu h1 {
+        flex-basis: auto;
       }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ————— Menú de botones horizontal ————— -->
+  <div class="menu">
+    <img src="logo-natural-foods.png" alt="Natural Foods Logo" />
+    <h1>Evaluaciones Trimestral</h1>
+
+    <a href="#"
+       data-src="https://forms.office.com/r/saqhvE8Hym"
+       class="btn-load">
+      ✅ Mi Evaluación
+    </a>
+    <a href="#"
+       data-src="https://forms.office.com/r/n9kUmHfphr"
+       class="btn-load">
+      🤝 Colaboradores del mismo nivel
+    </a>
+    <a href="#"
+       data-src="https://forms.office.com/r/BVgb6ZpNae"
+       class="btn-load">
+      🧑‍💼 Entre Gerentes y Directores
+    </a>
+    <a href="#"
+       data-src="https://forms.office.com/r/mEEJ3EEpHM"
+       class="btn-load">
+      🔽 Subordinados a Jefes
+    </a>
+  </div>
+
+  <!-- ————— Aquí aparecerá el formulario cargado ————— -->
+  <div class="form-container">
+    <iframe id="formFrame" src="" allow="geolocation; microphone; camera"></iframe>
+  </div>
+
+  <script>
+    // Carga la URL del formulario en el iframe al hacer clic
+    document.querySelectorAll('.btn-load').forEach(function(btn){
+      btn.addEventListener('click', function(evt){
+        evt.preventDefault();
+        var url = this.getAttribute('data-src');
+        document.getElementById('formFrame').src = url;
+      });
+    });
+
+    // Carga automática del primer formulario al iniciar
+    window.addEventListener('DOMContentLoaded', function(){
+      var first = document.querySelector('.btn-load');
+      if(first) first.click();
+    });
+  </script>
+</body>
+</html>
